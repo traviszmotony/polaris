@@ -1,0 +1,231 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<style>
+  #pageLoader {
+    opacity: 0.8;
+  }
+</style>
+<div class="px-6 py-8 max-w-7xl mx-auto">
+  <h2 class="text-4xl font-bold text-gray-900 mb-2">👤 Client Dashboard</h2>
+  <p class="text-gray-600 text-lg mb-8">Hi {{ user.username }}! Here is your personalized performance and maturity model overview.</p>
+
+  <!-- Tabs -->
+  <div class="mb-6 border-b border-gray-200">
+    <ul class="flex space-x-8 text-sm font-medium text-center" id="dashboardTabs" role="tablist">
+      <li>
+        <button class="inline-block py-3 px-4 text-gray-500 hover:text-indigo-600 hover:border-indigo-600 border-b-2 border-transparent" id="reports-tab" data-bs-toggle="tab" data-bs-target="#reports" type="button" role="tab">
+          📊 Reports
+        </button>
+      </li>
+      <li>
+        <button class="inline-block py-3 px-4 border-b-2 border-indigo-600 text-indigo-600" id="assessment-tab" data-bs-toggle="tab" data-bs-target="#assessment" type="button" role="tab">
+          ✍️ Assessment
+        </button>
+      </li>
+    </ul>
+  </div>
+
+  <div class="tab-content" id="dashboardTabsContent">
+    <!-- Assessment Form Tab -->
+    <div class="tab-pane fade show active" id="assessment" role="tabpanel">
+      <div class="bg-white p-6 rounded-2xl shadow">
+        <form method="post" action="{% url 'generate_assessment' %}" onsubmit="showLoader()">
+          {% csrf_token %}
+          <div class="mb-4">
+            <label for="inputText" class="block text-sm font-medium text-gray-700 mb-2">
+              Paste your qualitative assessment text here:
+            </label>
+            <textarea name="input_text" id="inputText" class="w-full border border-gray-300 rounded-lg p-4 focus:ring-indigo-500 focus:border-indigo-500" rows="6" required></textarea>
+          </div>
+          
+          <button id="submitBtn" type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded-lg shadow">
+            Submit Assessment
+          </button>
+    
+          <!-- Spinner -->
+          <div id="pageLoader" class="fixed inset-0 bg-white bg-opacity-80 z-50 hidden flex items-center justify-center">
+            <div class="flex items-center space-x-2 text-indigo-600">
+              <svg class="animate-spin h-6 w-6 text-indigo-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path>
+              </svg>
+              <span class="text-lg font-medium">Processing assessment...</span>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    
+    <script>
+      function showLoader() {
+        document.getElementById("submitBtn").disabled = true;
+        document.getElementById("submitBtn").classList.add("opacity-50", "cursor-not-allowed");
+        
+        // Show full-page loader
+        document.getElementById("pageLoader").classList.remove("hidden");
+      }
+    </script>    
+
+    <!-- Reports Tab -->
+    <div class="tab-pane fade" id="reports" role="tabpanel">
+      <div class="mt-8 space-y-10">
+        <!-- Header -->
+        <div>
+          <h2 class="text-3xl font-bold text-gray-900">Client-Facing Dashboard</h2>
+          <p class="text-gray-500 mt-1">Executive Report View</p>
+        </div>
+
+        <!-- Summary Snapshot -->
+        <h3 class="text-xl font-semibold mb-4 text-gray-800">Summary Snapshot</h3>
+
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+          <div class="bg-indigo-100 p-6 rounded-xl shadow text-center">
+            <p class="text-sm font-medium text-gray-700">Current Maturity Level</p>
+            <p class="text-2xl font-bold text-indigo-800 mt-2">{{ quadrant }}</p>
+          </div>
+          <div class="bg-green-100 p-6 rounded-xl shadow text-center">
+            <p class="text-sm font-medium text-gray-700">Strategic Contribution</p>
+            <p class="text-xl font-semibold text-green-800 mt-2">{{latest_assessment.strategy_score}}</p>
+          </div>
+          <div class="bg-yellow-100 p-6 rounded-xl shadow text-center">
+            <p class="text-sm font-medium text-gray-700">Operational Maturity</p>
+            <p class="text-xl font-semibold text-yellow-800 mt-2">{{latest_assessment.execution_score}}</p>
+          </div>
+        </div>
+
+        <!-- Compass Matrix -->
+        <div class="bg-white p-6 rounded-xl shadow border">
+          <h3 class="text-xl font-semibold mb-4 text-gray-800">Compass Maturity Matrix</h3>
+          <div class="relative w-full h-64 bg-gray-50 rounded-lg border">
+            <div class="absolute left-1/2 top-0 bottom-0 w-0.5 bg-gray-300 transform -translate-x-1/2"></div>
+            <div class="absolute top-1/2 left-0 right-0 h-0.5 bg-gray-300 transform -translate-y-1/2"></div>
+
+            <div class="absolute top-4 left-4 text-xs text-gray-600">Transformational</div>
+            <div class="absolute top-4 right-4 text-xs text-gray-600">Strategic</div>
+            <div class="absolute bottom-4 left-4 text-xs text-gray-600">Tactical</div>
+            <div class="absolute bottom-4 right-4 text-xs text-gray-600">Emerging</div>
+
+            <div class="absolute -bottom-6 left-1/2 transform -translate-x-1/2 text-sm font-semibold">Strategic Contribution</div>
+            <div class="absolute top-1/2 -left-24 transform -translate-y-1/2 -rotate-90 text-sm font-semibold">Operational Maturity</div>
+
+            <!-- Dot marker for quadrant -->
+            {% if quadrant == 'Tactical' %}
+              <div class="absolute w-4 h-4 bg-indigo-600 rounded-full shadow-md" style="top: 65%; left: 30%;"></div>
+            {% elif quadrant == 'Transformational' %}
+              <div class="absolute w-4 h-4 bg-indigo-600 rounded-full shadow-md" style="top: 25%; left: 30%;"></div>
+            {% elif quadrant == 'Emerging' %}
+              <div class="absolute w-4 h-4 bg-indigo-600 rounded-full shadow-md" style="top: 65%; left: 65%;"></div>
+            {% elif quadrant == 'Strategic' %}
+              <div class="absolute w-4 h-4 bg-indigo-600 rounded-full shadow-md" style="top: 25%; left: 65%;"></div>
+            {% endif %}
+          </div>
+        </div>
+
+        <!-- Detailed Pillar Table - Modern UI -->
+        <div class="bg-white p-6 rounded-2xl shadow-xl border border-gray-200">
+          <h3 class="text-2xl font-bold mb-6 text-gray-900">Detailed Pillar Table</h3>
+          <div class="overflow-x-auto">
+            <table class="min-w-full text-sm text-left border-separate border-spacing-y-2">
+              <thead class="bg-gray-50">
+                <tr>
+                  <th class="px-6 py-3 text-gray-600 font-semibold tracking-wide">Pillar</th>
+                  <th class="px-6 py-3 text-gray-600 font-semibold tracking-wide">Quote</th>
+                  <th class="px-6 py-3 text-gray-600 font-semibold tracking-wide">Recommendations</th>
+                </tr>
+              </thead>
+              <tbody class="text-gray-700">
+                {% for score in pillar_scores %}
+                <tr class="bg-white hover:bg-gray-50">
+                  <td class="px-2 py-2 font-medium text-gray-900 align-top w-1/5">
+                    {{ score.pillar }}
+                  </td>
+                  <td class="px-2 py-2 align-top w-2/5">
+                    <ul class="list-disc list-inside mb-0 text-gray-700">
+                      {% for quote in quotes %}
+                        {% if quote.pillar == score.pillar %}
+                          <li class="leading-snug">{{ quote.quote_text }}</li>
+                        {% endif %}
+                      {% endfor %}
+                    </ul>
+                  </td>
+                  <td class="px-2 py-2 align-top w-2/5">
+                    <ul class="list-disc list-inside mb-0 text-gray-700">
+                      {% for rec in recommendations %}
+                        {% if rec.pillar == score.pillar %}
+                          <li class="leading-snug">{{ rec.recommendation_text }}</li>
+                        {% endif %}
+                      {% endfor %}
+                    </ul>
+                  </td>
+                </tr>
+                <tr>
+                  <td><hr/></td>
+                  <td><hr/></td>
+                  <td><hr/></td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+
+        <!-- Timeline & Recommendations -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="bg-white p-6 rounded-xl shadow border">
+            <h3>📅 Change Timeline</h3>
+            <ul>
+              {% for milestone in milestones %}
+                <li>
+                  <strong>{{ milestone.date }}</strong>: {{ milestone.title }}<br>
+                  <em>{{ milestone.description }}</em><br>
+                  <small>By {{ milestone.user.username|default:"System" }}</small>
+                </li>
+              {% empty %}
+                <li>No milestones recorded yet.</li>
+              {% endfor %}
+            </ul>
+            <!-- <h4 class="text-lg font-semibold text-gray-800 mb-3">Change Timeline</h4>
+            <div class="flex items-center space-x-3">
+              <span class="text-xs">Initial</span>
+              <div class="flex-1 h-1 bg-gray-300 relative">
+                <div class="absolute left-0 top-0 w-3 h-3 bg-indigo-600 rounded-full"></div>
+                <div class="absolute left-1/2 top-0 transform -translate-x-1/2 w-3 h-3 bg-indigo-600 rounded-full"></div>
+                <div class="absolute right-0 top-0 w-3 h-3 bg-indigo-600 rounded-full"></div>
+              </div>
+              <span class="text-xs">3-Month</span>
+            </div> -->
+          </div>
+
+          <div class="bg-white p-6 rounded-xl shadow border">
+            <h4 class="text-lg font-semibold text-gray-800 mb-3">Recommendations Panel</h4>
+            <ul class="list-disc list-inside text-sm text-gray-700 space-y-1">
+              {% for item in recommendations %}
+                <li>{{ item.recommendation_text }}</li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Optional: Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const show_reports = "{{ show_reports }}";
+    if(show_reports) {
+      // Simulate click on Reports tab
+      document.getElementById("reports-tab").click();
+
+      // Optional: scroll to top
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  });
+</script>
+{% endblock %}
+
+# touched on 2025-05-27T15:29:13.440354Z
