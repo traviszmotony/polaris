@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% load static %}
+{% load widget_tweaks %}
+{% block content %}
+
+<style>
+    body {
+        background-color: #dedcf1;
+    }
+
+   .section-container {
+        height: 100%;
+        background: #dedcf1;
+        position: relative;
+        top: 55px;
+        display: flex;
+        justify-content: center;
+        align-items: start;
+        padding-top: 300px;
+        color: #162267;
+   }
+
+   .main-container {
+    width: 500px;
+   }
+
+   .mission {
+    color: balck;
+   }
+
+   svg {
+    width: 44.875rem;
+    height: 40.4375rem;
+    position: absolute;
+    left: 0;
+   }
+</style>
+
+<section class="section-container">
+    <!-- Decorative SVG -->
+    <svg class="absolute top-0 left-0 w-full h-full pointer-events-none" viewBox="0 0 718 727" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M359 19.3641C368.611 205.016 515.611 353.828 698.993 363.5C515.611 373.172 368.611 521.984 359 707.636C349.389 521.984 202.389 373.172 19.0068 363.5C202.389 353.828 349.389 205.016 359 19.3641Z" stroke="#4058C2"/>
+    </svg>
+  
+    <!-- Content -->
+    <div class="main-container">
+        <div class="mb-4">
+        <h1 class="text-4xl md:text-5xl font-bold text-[#1D237D] leading-tight">
+            HR Consulting for <span class="text-[#4058C2] font-serif italic">Growing</span><br>
+            Companies & Their Leaders
+        </h1>
+        </div>
+
+        <div class="services-hr_text-wrapper">
+            <div class="services-hr_eyebrow">
+                <div class="heading-style-tagline text-color-violet">FOR BUSINESSES</div>
+            </div>
+            <div class="services-hr_heading">
+                <h3>Compass Maturity Model: HR & Leadership Maturity Assessment</h3>
+
+                <p class="mission">
+                    Our comprehensive assessment offers two tiers—Lite and Pro—to meet companies where they are. This structured approach helps HR leaders and executives align HR and leadership maturity with business goals, ensuring scalable growth and stronger organizational performance.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+  
+{% endblock %}
+
+# touched on 2025-05-27T15:45:56.089141Z

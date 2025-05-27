@@ -1,0 +1,95 @@
+{
+	"HR Expertise": [
+		{ "phrase": "Manual onboarding", "score": -15 },
+		{ "phrase": "paper files", "score": -15 },
+		{ "phrase": "We just follow the rules", "score": -10 },
+		{ "phrase": "Partnering with business leaders", "score": 15 },
+		{ "phrase": "HR seen as a strategic asset", "score": 15 },
+		{ "phrase": "Using Rippling", "score": 10 },
+		{ "phrase": "Using Lattice", "score": 10 },
+		{ "phrase": "Using Greenhouse", "score": 10 }
+	],
+	"Consultation": [
+		{ "phrase": "HR isn't in the room", "score": -15 },
+		{ "phrase": "We respond when asked", "score": -10 },
+		{ "phrase": "HR has a seat at the table", "score": 15 },
+		{ "phrase": "HR flagged this before it became an issue", "score": 10 }
+	],
+	"Communication": [
+		{ "phrase": "Mixed messages", "score": -20 },
+		{ "phrase": "unclear priorities", "score": -20 },
+		{ "phrase": "Depends on who you ask", "score": -10 },
+		{ "phrase": "Exec team syncs", "score": 10 },
+		{ "phrase": "clear manager talking points", "score": 10 },
+		{ "phrase": "Survey results", "score": 15 },
+		{ "phrase": "2-way communication", "score": 15 }
+	],
+	"Relationship Management": [
+		{ "phrase": "We don't talk across teams", "score": -15 },
+		{ "phrase": "HR is just for problems", "score": -10 },
+		{ "phrase": "HR links people and ideas", "score": 10 },
+		{ "phrase": "Helps teams navigate conflict", "score": 15 }
+	],
+	"Leadership & Navigation": [
+		{ "phrase": "Not sure what the priorities are", "score": -15 },
+		{ "phrase": "Starts but doesn't finish", "score": -10 },
+		{ "phrase": "We have a north star", "score": 10 },
+		{ "phrase": "Quick pivot during change", "score": 15 }
+	],
+	"Ethical Practice": [
+		{ "phrase": "Depends who you are", "score": -20 },
+		{ "phrase": "We didn't document it", "score": -10 },
+		{ "phrase": "Everyone knows the rules", "score": 10 },
+		{ "phrase": "We walked away from that deal", "score": 15 }
+	],
+	"Critical Evaluation": [
+		{ "phrase": "We just go with instinct", "score": -15 },
+		{ "phrase": "We don't track that", "score": -10 },
+		{ "phrase": "We used exit data to shift strategy", "score": 10 },
+		{ "phrase": "We layer engagement + attrition", "score": 15 }
+	],
+	"Strategic Thinking": [
+		{ "phrase": "Just trying to survive", "score": -15 },
+		{ "phrase": "HR goals aren't linked to business", "score": -10 },
+		{ "phrase": "We modeled a few outcomes", "score": 10 },
+		{ "phrase": "HR goals tie to company OKRs", "score": 15 }
+	],
+	"People Leadership": [
+		{ "phrase": "We don't do feedback", "score": -15 },
+		{ "phrase": "They don't trust us to own work", "score": -10 },
+		{ "phrase": "They ask, not tell", "score": 10 },
+		{ "phrase": "Develops others intentionally", "score": 15 }
+	],
+	"Execution Excellence": [
+		{ "phrase": "Things fall through the cracks", "score": -15 },
+		{ "phrase": "It takes too long to hire", "score": -10 },
+		{ "phrase": "We hit our onboarding goals", "score": 10 },
+		{ "phrase": "Tight process, clear metrics", "score": 15 }
+	],
+	"Influence and Collaboration": [
+		{ "phrase": "Decisions made behind closed doors", "score": -15 },
+		{ "phrase": "We didn't know that was happening", "score": -10 },
+		{ "phrase": "Works well with Product/Eng", "score": 10 },
+		{ "phrase": "People listen when they speak", "score": 15 }
+	],
+	"Emotional Intelligence": [
+		{ "phrase": "Told me to get over it", "score": -15 },
+		{ "phrase": "They escalate small things", "score": -10 },
+		{ "phrase": "They get what motivates us", "score": 10 },
+		{ "phrase": "Owns their impact", "score": 15 }
+	],
+	"Innovation and Change Management": [
+		{ "phrase": "We've always done it this way", "score": -15 },
+		{ "phrase": "Another new tool?", "score": -10 },
+		{ "phrase": "Let's test and learn", "score": 10 },
+		{ "phrase": "Led a successful shift", "score": 15 }
+	],
+	"Resilience and Adaptability": [
+		{ "phrase": "We're always on fire", "score": -15 },
+		{ "phrase": "No room for mistakes", "score": -10 },
+		{ "phrase": "We regrouped and moved forward", "score": 10 },
+		{ "phrase": "Handled major shifts with calm", "score": 15 }
+	]
+}
+
+# touched on 2025-05-27T15:29:07.767151Z
